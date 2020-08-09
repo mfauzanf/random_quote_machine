@@ -5,10 +5,24 @@ class GetQuote extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        text:"Of all things, I liked books best.",
-        author: "Nikola Tesla"
+        text:"",
+        author: ""
       };
       this.quote = this.quote.bind(this);
+    }
+    componentDidMount() {
+      fetch("https://type.fit/api/quotes")
+        .then((response) => {
+          return response.json();
+        })
+        // .then((res) => this.setState({intentOptions: res.data}));
+        .then((data) => {
+          var item = data[Math.floor(Math.random() * data.length)]
+          this.setState(state => ({
+            text: item.text,
+            author:item.author
+          }));
+        });
     }
     quote() {
         fetch("https://type.fit/api/quotes")
@@ -18,16 +32,15 @@ class GetQuote extends React.Component {
         // .then((res) => this.setState({intentOptions: res.data}));
         .then((data) => {
           var item = data[Math.floor(Math.random() * data.length)]
-          console.log(item.text);
-          console.log(item.author);
           this.setState(state => ({
             text: item.text,
             author:item.author
           }));
         });
-    }
+     }
     render() {
       return (
+        <div id="wrapper">
         <div id="quote-box">
         <div className="quote-text">
           <i className="fa fa-quote-left"> </i>{this.state.text}<span id="text"></span>
@@ -45,14 +58,7 @@ class GetQuote extends React.Component {
           <button className="button" id="new-quote" onClick={this.quote}>New quote</button>
         </div>
       </div>
-
-
-        // <div>
-        //   <button className='inc' onClick={this.increment}>Increment!</button>
-        //   <button className='dec' onClick={this.decrement}>Decrement!</button>
-        //   <button className='reset' onClick={this.reset}>Reset</button>
-        //   <h1>Current Count: {this.state.count}</h1>
-        // </div>
+      </div>
       );
     }
   };
