@@ -6,11 +6,12 @@ class GetQuote extends React.Component {
       super(props);
       this.state = {
         text:"",
-        author: ""
+        author: "",
+        url:"https://twitter.com/intent/tweet?text="
       };
       this.quote = this.quote.bind(this);
     }
-    componentDidMount() {
+    componentWillMount() {
       fetch("https://type.fit/api/quotes")
         .then((response) => {
           return response.json();
@@ -20,7 +21,8 @@ class GetQuote extends React.Component {
           var item = data[Math.floor(Math.random() * data.length)]
           this.setState(state => ({
             text: item.text,
-            author:item.author
+            author:item.author,
+            url:"https://twitter.com/intent/tweet?text="+item.text+" - "+item.author
           }));
         });
     }
@@ -29,14 +31,15 @@ class GetQuote extends React.Component {
         .then((response) => {
           return response.json();
         })
-        // .then((res) => this.setState({intentOptions: res.data}));
         .then((data) => {
           var item = data[Math.floor(Math.random() * data.length)]
           this.setState(state => ({
             text: item.text,
-            author:item.author
+            author:item.author,
+            url:"https://twitter.com/intent/tweet?text="+item.text+" - "+item.author
           }));
-        });
+        })
+        
      }
     render() {
       return (
@@ -49,11 +52,8 @@ class GetQuote extends React.Component {
           - <span id="author">{this.state.author}</span>
         </div>
         <div className="buttons">
-          <a className="button" id="tweet-quote" title="Tweet this quote!" target="_blank">
+          <a className="button" id="tweet-quote" title="Tweet this quote!" target="_blank" href={this.state.url}>
             <i className="fa fa-twitter"></i>
-          </a>
-          <a className="button" id="tumblr-quote" title="Post this quote on tumblr!" target="_blank">
-            <i className="fa fa-tumblr"></i>
           </a>
           <button className="button" id="new-quote" onClick={this.quote}>New quote</button>
         </div>
