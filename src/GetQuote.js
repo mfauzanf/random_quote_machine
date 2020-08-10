@@ -12,17 +12,14 @@ class GetQuote extends React.Component {
       this.quote = this.quote.bind(this);
     }
     componentDidMount() {
-      this.mounted = true;
-      
+      this.mounted = true; 
       if (this.mounted) {
         this.quote();
       }
     }
-  
     componentWillUnmount() {
       this.mounted = false;
     }
-    
     quote() {
         fetch("https://type.fit/api/quotes")
         .then(response =>response.json() )
