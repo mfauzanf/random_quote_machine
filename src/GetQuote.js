@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import fetch from "node-fetch";
 
 class GetQuote extends React.Component {
