@@ -7,39 +7,34 @@ class GetQuote extends React.Component {
       this.state = {
         text:"",
         author: "",
-        url:"https://twitter.com/intent/tweet?text="
+        url:""
       };
       this.quote = this.quote.bind(this);
     }
-    componentWillMount() {
-      fetch("https://type.fit/api/quotes")
-        .then((response) => {
-          return response.json();
-        })
-        // .then((res) => this.setState({intentOptions: res.data}));
-        .then((data) => {
-          var item = data[Math.floor(Math.random() * data.length)]
-          this.setState(state => ({
-            text: item.text,
-            author:item.author,
-            url:"https://twitter.com/intent/tweet?text="+item.text+" - "+item.author
-          }));
-        });
+    componentDidMount() {
+      this.mounted = true;
+      
+      if (this.mounted) {
+        this.quote();
+      }
     }
+  
+    componentWillUnmount() {
+      this.mounted = false;
+    }
+    
     quote() {
         fetch("https://type.fit/api/quotes")
-        .then((response) => {
-          return response.json();
-        })
+        .then(response =>response.json() )
         .then((data) => {
           var item = data[Math.floor(Math.random() * data.length)]
-          this.setState(state => ({
-            text: item.text,
+          this.setState({
+            text: item.text,  
             author:item.author,
             url:"https://twitter.com/intent/tweet?text="+item.text+" - "+item.author
-          }));
+          });
         })
-        
+        .catch(error => console.log(error));
      }
     render() {
       return (
@@ -69,4 +64,7 @@ class GetQuote extends React.Component {
   Fix cannot-read-property-setstate-of-undefined
   https://stackoverflow.com/questions/49600249/reactjs-cannot-read-property-setstate-of-undefined
 
+
+  Referensi lain :
+  https://codesandbox.io/s/4zyxn3qyl9?file=/src/Generator.js:643-800
   */
