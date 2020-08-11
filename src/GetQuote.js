@@ -38,7 +38,7 @@ class GetQuote extends React.Component {
         <div id="wrapper">
         <div id="quote-box">
         <div className="quote-text">
-          <i className="fa fa-quote-left"> </i>{this.state.text}<span id="text"></span>
+          <i className="fa fa-quote-left"> </i><span id="text">{this.state.text}</span>
         </div>
         <div className="quote-author">
           - <span id="author">{this.state.author}</span>
